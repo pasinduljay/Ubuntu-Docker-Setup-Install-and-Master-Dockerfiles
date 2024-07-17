@@ -1,17 +1,12 @@
 #!/bin/bash
 
-set -x  # Print each command before executing it for better debugging
-
-# Update package lists
 sudo apt update
 
-# Install Docker
 sudo apt-get install -y docker.io
 
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 
 sudo chmod +x /usr/local/bin/docker-compose
 
-# Verify installation
 docker --version
 docker-compose --version
 
