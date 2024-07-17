@@ -13,9 +13,17 @@ echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# Define color codes
+LIGHT_BLUE='\033[1;34m'
+NC='\033[0m' # No Color
+
 # Check if Docker and Docker Compose are installed
 docker_version=$(docker --version 2>/dev/null)
 compose_version=$(docker-compose --version 2>/dev/null)
+
+# Print versions with color
+echo -e "${LIGHT_BLUE}$docker_version${NC}"
+echo -e "${LIGHT_BLUE}$compose_version${NC}"
 
 # Display versions
 if [ -n "$docker_version" ] && [ -n "$compose_version" ]; then
