@@ -4,7 +4,7 @@
 sudo apt update
 
 # Install Docker
-sudo apt-get install docker.io
+sudo apt-get install docker.io -y
 
 # Add current user to the docker group
 sudo usermod -aG docker $USER && newgrp docker
