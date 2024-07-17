@@ -9,9 +9,6 @@ sudo apt update
 # Install Docker
 sudo apt-get install -y docker.io
 
-# Check if Docker service is running
-sudo systemctl status docker
-
 # Add current user to the docker group
 sudo usermod -aG docker $USER && newgrp docker
 
