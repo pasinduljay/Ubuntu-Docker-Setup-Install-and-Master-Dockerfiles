@@ -1,15 +1,15 @@
 #!/bin/bash
 
 # Update package list
-echo "Updating package list..."
+echo -e "\033[0;32mUpdating package list...\033[0m"
 sudo apt update
 
 # Install Docker
-echo "Installing Docker..."
+echo -e "\033[0;32mInstalling Docker...\033[0m"
 sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh >/dev/null 2>&1
 
 # Install Docker Compose
-echo "Installing Docker Compose..."
+echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
