@@ -38,7 +38,7 @@ bash <(curl -Ls https://raw.githubusercontent.com/pasinduljay/Ubuntu-Docker-Setu
     > **$USER**: This variable is automatically replaced with your actual username when you run the command. It represents the current logged-in user's username. Therefore, the command effectively adds your current user to the **`docker`** group, enabling you to run Docker commands without needing to prepend **`sudo`** each time.
         
     ```
-    sudo usermod -aG docker $USER
+    sudo usermod -aG docker $USER && newgrp docker
     ```
         
 4️⃣ **Log out and log back in 👣**
