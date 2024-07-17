@@ -7,6 +7,7 @@ sudo apt update
 # Install Docker
 echo -e "\033[0;32mInstalling Docker...\033[0m"
 sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh >/dev/null 2>&1
+sudo rm get-docker.sh
 
 # Install Docker Compose
 echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
@@ -15,6 +16,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # Define color codes
 LIGHT_BLUE='\033[1;34m'
+RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 # Check if Docker and Docker Compose are installed
@@ -22,20 +24,16 @@ docker_version=$(docker --version 2>/dev/null)
 compose_version=$(docker-compose --version 2>/dev/null)
 
 # Print versions with color
-echo -e "${LIGHT_BLUE}$docker_version${NC}"
-echo -e "${LIGHT_BLUE}$compose_version${NC}"
-
-# Display versions
-if [ -n "$docker_version" ] && [ -n "$compose_version" ]; then
-    echo -e "\033[0;32mDocker installed successfully:\033[0m $docker_version"
-    echo -e "\033[0;32mDocker Compose installed successfully:\033[0m $compose_version"
+if [ -n "$docker_version" ]; then
+    echo -e "${LIGHT_BLUE}$docker_version${NC}"
 else
-    if [ -z "$docker_version" ]; then
-		echo -e "\033[0;31mDocker is not installed.\033[0m"
-    fi
-    if [ -z "$compose_version" ]; then
-		echo -e "\033[0;31mDocker Compose is not installed.\033[0m"
-    fi
+    echo -e "${RED}Docker is not installed.${NC}"
+fi
+
+if [ -n "$compose_version" ]; then
+    echo -e "${LIGHT_BLUE}$compose_version${NC}"
+else
+    echo -e "${RED}Docker Compose is not installed.${NC}"
 fi
 
 echo -e "\033[0;32mSetup completed successfully!\033[0m"
