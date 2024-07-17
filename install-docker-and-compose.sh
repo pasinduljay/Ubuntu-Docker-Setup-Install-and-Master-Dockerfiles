@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x  # Print each command before executing it for better debugging
+
 # Update package lists
 sudo apt update
 
@@ -7,7 +9,7 @@ sudo apt update
 sudo apt-get install -y docker.io
 
 # Add current user to the docker group
-sudo usermod -aG docker $USER && newgrp docker
+sudo usermod -aG docker $USER
 
 # Install Docker Compose
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 
