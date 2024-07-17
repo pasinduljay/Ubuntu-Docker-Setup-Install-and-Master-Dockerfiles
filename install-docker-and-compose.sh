@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x  # Print each command before executing it for better debugging
-
 # Update package lists
 sudo apt update
 
