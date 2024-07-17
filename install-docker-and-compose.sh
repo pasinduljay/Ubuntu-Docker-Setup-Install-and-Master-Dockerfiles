@@ -7,7 +7,6 @@ sudo apt update
 # Install Docker
 echo -e "\033[0;32mInstalling Docker...\033[0m"
 sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh >/dev/null 2>&1
-sudo rm get-docker.sh
 
 # Install Docker Compose
 echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
@@ -48,7 +47,7 @@ sleep 1
 echo -e "\033[0;31m1\033[0m"
 
 sudo usermod -aG docker $USER
-
+sudo rm get-docker.sh
 # Refresh group membership
 echo -e "\033[0;32mRefreshing group membership...\033[0m"
 newgrp docker
