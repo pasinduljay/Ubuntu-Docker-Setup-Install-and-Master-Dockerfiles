@@ -1,26 +1,50 @@
 #!/bin/bash
 
-# Update package lists
-sudo apt update
-sleep 2
+# Function to detect Ubuntu version
+get_ubuntu_version() {
+    lsb_release -cs
+}
 
-# Install Docker
-sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh && sudo rm get-docker.sh  # Remove the installation script
-sleep 2
+# Remove existing Docker related packages
+packages=("docker.io" "docker-doc" "docker-compose" "docker-compose-v2" "podman-docker" "containerd" "runc")
+for pkg in "${packages[@]}"; do
+    sudo apt-get remove -y $pkg
+done
 
-# Add current user to the docker group
-sudo usermod -aG docker $USER && newgrp docker
-sleep 2
+# Install prerequisites
+sudo apt-get update
+sudo apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    lsb-release
 
-# Verify installation
-docker --version
-sleep 2
+# Add Docker's official GPG key
+sudo install -m 0755 -d /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker-archive-keyring.gpg
 
-# Install Docker Compose
-sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
-sleep 2
+# Add Docker repository to Apt sources
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+  $(get_ubuntu_version) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 
-# Verify installation
-docker-compose --version
+# Check the exit status of adding Docker's GPG key and repository
+if [ $? -eq 0 ]; then
+    # Install Docker packages if repository setup was successful
+    sudo apt-get update
+    sudo apt-get install -y \
+        docker-ce \
+        docker-ce-cli \
+        containerd.io \
+        docker-buildx-plugin \
+        docker-compose
 
-echo "Docker and Docker Compose successfully installed!"
+    # Add current user to docker group
+    sudo usermod -aG docker $USER
+    sudo chown root:docker /var/run/docker.sock
+
+    # Display completion message
+    echo "Docker installation completed successfully."
+else
+    echo "Failed to add Docker repository. Docker installation aborted."
+fi
