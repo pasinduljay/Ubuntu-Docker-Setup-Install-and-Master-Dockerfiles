@@ -1,22 +1,35 @@
 #!/bin/bash
 
+# Define color codes
+LIGHT_BLUE='\033[1;34m'
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 # Update package list
 echo -e "\033[0;32mUpdating package list...\033[0m"
 sudo apt update
 
-# Install Docker
-echo -e "\033[0;32mInstalling Docker...\033[0m"
-sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh >/dev/null 2>&1
+# Function to check if Docker is installed
+check_docker_installed() {
+    docker --version >/dev/null 2>&1
+}
+
+# Function to install Docker
+install_docker() {
+    echo -e "${GREEN}Installing Docker...${NC}"
+    sudo curl -fsSL https://get.docker.com -o get-docker.sh && sudo sh get-docker.sh >/dev/null 2>&1
+}
+
+# Install Docker and check until installed
+while ! check_docker_installed; do
+    install_docker
+done
 
 # Install Docker Compose
 echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
-
-# Define color codes
-LIGHT_BLUE='\033[1;34m'
-RED='\033[0;31m'
-NC='\033[0m' # No Color
 
 # Check if Docker and Docker Compose are installed
 docker_version=$(docker --version 2>/dev/null)
