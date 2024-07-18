@@ -41,6 +41,12 @@ install_docker_compose() {
 # Loop until Docker Compose is installed
 while ! check_docker_compose_installed; do
     install_docker_compose
+    # Add a debug check
+    if check_docker_compose_installed; then
+        echo -e "${GREEN}Docker Compose installed successfully.${NC}"
+    else
+        echo -e "${RED}Docker Compose installation failed, retrying...${NC}"
+    fi
 done
 
 # Check if Docker and Docker Compose are installed
