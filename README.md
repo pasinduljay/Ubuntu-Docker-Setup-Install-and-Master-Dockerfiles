@@ -1,4 +1,4 @@
-# 🐳 Installing Docker and Docker Compose
+# 🐳 Installing Docker and Docker Compose on Ubuntu 20.04+
 
 <p align="center">
   <img src="./media/docker.png" alt="Docker Image" />
