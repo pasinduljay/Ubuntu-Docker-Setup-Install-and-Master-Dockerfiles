@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Update package list
-echo -e "\033[0;32mUpdating package list...\033[0m"
+echo -e "${GREEN}Updating package list...${NC}"
 sudo apt update
 
 # Function to check if Docker is installed
@@ -27,7 +27,7 @@ while ! check_docker_installed; do
 done
 
 # Install Docker Compose
-echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
+echo -e "${GREEN}Installing Docker Compose...${NC}"
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
@@ -48,19 +48,27 @@ else
     echo -e "${RED}Docker Compose is not installed.${NC}"
 fi
 
-echo -e "\033[0;32mSetup completed successfully!\033[0m"
+echo -e "${GREEN}Setup completed successfully!${NC}"
 
 # Add user to the docker group
-echo -e "\033[0;32mAdding user to the Docker group...\033[0m"
-sleep 1
-echo -e "\033[0;31m3\033[0m"
-sleep 1
-echo -e "\033[0;31m2\033[0m"
-sleep 1
-echo -e "\033[0;31m1\033[0m"
-
+echo -e "${GREEN}Adding user to the Docker group...${NC}"
 sudo usermod -aG docker $USER
+
+# Remove Docker installation script
 sudo rm get-docker.sh
-# Refresh group membership
-echo -e "\033[0;32mRefreshing group membership...\033[0m"
-newgrp docker
+
+echo -e "${LIGHT_BLUE}Do you need to refresh group membership? (Recommended) (Y/n):${NC} \c"
+read user_input
+user_input=${user_input:-Y}
+
+if [[ $user_input =~ ^[Yy]$ ]]; then
+    echo -e "${GREEN}Refreshing group membership...${NC}"
+    for i in 3 2 1; do
+        echo -e "${RED}$i${NC}"
+        sleep 1
+    done
+
+    newgrp docker
+else
+    echo -e "${RED}Group membership refresh skipped.${NC}"
+fi
