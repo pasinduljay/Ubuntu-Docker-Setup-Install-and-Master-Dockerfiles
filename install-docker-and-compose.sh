@@ -7,7 +7,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 
 # Update package list
-echo -e "${GREEN}Updating package list...${NC}"
+echo -e "\033[0;32mUpdating package list...\033[0m"
 sudo apt update
 
 # Function to check if Docker is installed
@@ -27,7 +27,7 @@ while ! check_docker_installed; do
 done
 
 # Install Docker Compose
-echo -e "${GREEN}Installing Docker Compose...${NC}"
+echo -e "\033[0;32mInstalling Docker Compose...\033[0m"
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
