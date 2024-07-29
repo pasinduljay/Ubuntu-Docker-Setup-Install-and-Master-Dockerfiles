@@ -58,7 +58,11 @@ sudo usermod -aG docker $USER
 sudo rm get-docker.sh
 
 echo -e "${LIGHT_BLUE}Do you need to refresh group membership? (Recommended) (Y/n):${NC} \c"
-read user_input
+
+# Read user input with a timeout of 10 seconds
+read -t 10 user_input
+
+# Default to 'Y' if no input is provided
 user_input=${user_input:-Y}
 
 if [[ $user_input =~ ^[Yy]$ ]]; then
