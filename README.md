@@ -10,7 +10,7 @@
 To install Docker and Docker Compose using Automated Installation, run the following command in your terminal:
      
 ```
-bash <(curl -Ls https://raw.githubusercontent.com/pasinduljay/Ubuntu-Docker-Setup-Install-and-Master-Dockerfiles/main/install-docker-and-compose.sh)
+bash <(curl -Ls https://gist.githubusercontent.com/pasinduljay/1c2867703fe96afcb1071a8f722d6f77/raw/1743846e38c62a6d01d163a196ef47ad57d11944/install-docker-and-compose.sh)
 ```
 
 ## 👩‍💻Manual Installation of Docker and Docker Compose
